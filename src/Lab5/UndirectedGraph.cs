@@ -112,11 +112,6 @@ namespace Lab5
             return node;
         }
 
-        // TODO
-         /**
-         * <summary> Returns the number of connected components in the graph .</summary>
-         */
-        
         public int ConnectedComponents
         {
             get
@@ -124,10 +119,18 @@ namespace Lab5
                 int connectedComponents = 0;
 
                 // for all the nodes
+                foreach (var node in Nodes)
+                {
                 //     if node is white
-                //        connectedComponents++
+                    if (node.Color == Color.White)
+                    {
+                        Dictionary<Node, Node> pred = new Dictionary<Node, Node>();
                 //        explore the neighbors
-                //        
+                        DFSVisit(node, pred);
+                //        connectedComponents++
+                        connectedComponents++;
+                    }
+                }
 
                 return connectedComponents;
             }
@@ -145,7 +148,12 @@ namespace Lab5
         {
             ResetNodeColor();
 
-            return false;
+            var node1 = GetNodeByName(nodename1);
+            var node2 = GetNodeByName(nodename2);
+
+            DFS(node1);
+
+            return node2.Color == Color.Black;
         }
 
         // TODO
@@ -177,7 +185,6 @@ namespace Lab5
         // TODO
         private void DFSVisit(Node node, Dictionary<Node,Node> pred)
         {
-            Console.WriteLine(node);
             node.Color = Color.Gray;
 
             // sort the neighbors so that we will visit in alphabetical order
